@@ -1,0 +1,21 @@
+From 67ddc4b229d6594d9ad4062378584651820029c3 Mon Sep 17 00:00:00 2001
+From: Ryan Coe <ryan@ryco.dev>
+Date: Fri, 21 Feb 2025 13:24:17 -0800
+Subject: [PATCH 1/1] update version string
+
+Signed-off-by: Ryan Coe <ryan@ryco.dev>
+---
+ devutils/print_tag_version.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/devutils/print_tag_version.sh b/devutils/print_tag_version.sh
+index 158bdc8eae633d3cd51a433c3df75a26ad97e1b6..98adba3e279f642b58cf06f2fd48dd75534d21e1 100755
+--- a/devutils/print_tag_version.sh
++++ b/devutils/print_tag_version.sh
+@@ -1,2 +1,2 @@
+ _root_dir=$(dirname $(dirname $(readlink -f $0)))
+-printf '%s-%s' $(cat $_root_dir/chromium_version.txt) $(cat $_root_dir/revision.txt)
++printf '%s.%s' $(cat $_root_dir/chromium_version.txt) $(cat $_root_dir/revision.txt)
+-- 
+2.30.2
+

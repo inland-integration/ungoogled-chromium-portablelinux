@@ -20,7 +20,7 @@ src_dir="${build_dir}/src"
 # clean
 # ==================================================
 echo "cleaning up directories"
-rm -rf "${src_dir}" "${build_dir}/domsubcache.tar.gz" 
+rm -rf "${src_dir}" "${build_dir}/domsubcache.tar.gz"
 mkdir -p "${src_dir}" "${download_cache}"
 
 ## fetch sources
@@ -42,6 +42,8 @@ mkdir -p "${src_dir}/out/Default"
 
 cd "${src_dir}"
 
+patch -Np1 -i ${root_dir}/update-version-string.patch
+
 # Use the --oauth2-client-id= and --oauth2-client-secret= switches for
 # setting GOOGLE_DEFAULT_CLIENT_ID and GOOGLE_DEFAULT_CLIENT_SECRET at
 # runtime -- this allows signing into Chromium without baked-in values
@@ -50,7 +52,7 @@ patch -Np1 -i ${root_dir}/use-oauth2-client-switches-as-default.patch
 # combine local and ungoogled-chromium gn flags
 cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args.gn"
 
-# adjust host name to download prebuilt tools below and sysroot files from 
+# adjust host name to download prebuilt tools below and sysroot files from
 # (see e.g. https://github.com/ungoogled-software/ungoogled-chromium/issues/1846)
 sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./build/linux/sysroot_scripts/sysroots.json
 sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./tools/clang/scripts/update.py
