@@ -1,5 +1,10 @@
 #!/bin/bash
 
+PACKAGE_START=$(date)
+echo "==============================================================="
+echo "  build package start at ${BUILD_START}"
+echo "==============================================================="
+
 clone=false
 while getopts "c" opt; do
     case "${opt}" in
@@ -90,3 +95,9 @@ export CFLAGS+=" -resource-dir=${llvm_resource_dir} -B${LLVM_BIN}"
 ./out/Default/gn gen out/Default --fail-on-unused-args
 
 ninja -C out/Default chrome chrome_sandbox chromedriver
+
+PACKAGE_END=$(date)
+echo "==============================================================="
+echo "  build package start at ${PACKAGE_START}"
+echo "  build package end   at ${PACKAGE_END}"
+echo "==============================================================="
