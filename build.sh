@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PACKAGE_START=$(date)
+BUILD_START=$(date)
 echo "==============================================================="
-echo "  build package start at ${BUILD_START}"
+echo "  Build package start at ${BUILD_START}"
 echo "==============================================================="
 
 clone=false
@@ -96,8 +96,8 @@ export CFLAGS+=" -resource-dir=${llvm_resource_dir} -B${LLVM_BIN}"
 
 ninja -C out/Default chrome chrome_sandbox chromedriver
 
-PACKAGE_END=$(date)
+BUILD_END=$(date)
 echo "==============================================================="
-echo "  build package start at ${PACKAGE_START}"
-echo "  build package end   at ${PACKAGE_END}"
+echo "  Build package start at ${BUILD_START}"
+echo "  Build package end   at ${BUILD_END}"
 echo "==============================================================="
