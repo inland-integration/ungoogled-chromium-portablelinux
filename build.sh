@@ -45,9 +45,11 @@ mkdir -p "${src_dir}/out/Default"
 "${main_repo}/utils/patches.py" apply "${src_dir}" "${main_repo}/patches"
 "${main_repo}/utils/domain_substitution.py" apply -r "${main_repo}/domain_regex.list" -f "${main_repo}/domain_substitution.list" -c "${build_dir}/domsubcache.tar.gz" "${src_dir}"
 
-cd "${src_dir}"
+cd "${main_repo}"
 
 patch -Np1 -i ${root_dir}/update-version-string.patch
+
+cd "${src_dir}"
 
 # Use the --oauth2-client-id= and --oauth2-client-secret= switches for
 # setting GOOGLE_DEFAULT_CLIENT_ID and GOOGLE_DEFAULT_CLIENT_SECRET at
