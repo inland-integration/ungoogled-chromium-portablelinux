@@ -18,7 +18,6 @@ chrome_100_percent.pak
 chrome_200_percent.pak
 chrome_crashpad_handler
 chromedriver
-chrome_sandbox
 chrome-wrapper
 icudtl.dat
 libEGL.so
