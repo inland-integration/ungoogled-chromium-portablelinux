@@ -57,6 +57,7 @@ cd "${src_dir}"
 patch -Np1 -i ${root_dir}/patches/0002-use-oauth2-client-switches-as-default.patch
 # disable check for a specific node version (here: 22.11.0, but latest lts we use is 22.16.0)
 patch -Np1 -i ${root_dir}/patches/0003-drop-nodejs-version-check.patch
+patch -Np1 -i ${root_dir}/patches/0004-webgpu-dawn-commit-hash.patch
 
 # combine local and ungoogled-chromium gn flags
 cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args.gn"
