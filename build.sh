@@ -47,17 +47,13 @@ mkdir -p "${src_dir}/out/Default"
 
 cd "${main_repo}"
 
-patch -Np1 -i ${root_dir}/patches/0001-update-version-string.patch
+patch -Np1 -i ${root_dir}/update-version-string.patch
 
 cd "${src_dir}"
 
-# Use the --oauth2-client-id= and --oauth2-client-secret= switches for
-# setting GOOGLE_DEFAULT_CLIENT_ID and GOOGLE_DEFAULT_CLIENT_SECRET at
-# runtime -- this allows signing into Chromium without baked-in values
-patch -Np1 -i ${root_dir}/patches/0002-use-oauth2-client-switches-as-default.patch
-# disable check for a specific node version (here: 22.11.0, but latest lts we use is 22.16.0)
-patch -Np1 -i ${root_dir}/patches/0003-drop-nodejs-version-check.patch
-patch -Np1 -i ${root_dir}/patches/0004-webgpu-dawn-commit-hash.patch
+for f in ${root_dir}/patches/*; do
+   patch -Np1 -i ${f}
+done
 
 # combine local and ungoogled-chromium gn flags
 cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args.gn"
@@ -84,10 +80,10 @@ mkdir -p third_party/node/linux/node-linux-x64/bin && ln -s /usr/bin/node third_
 # ==================================================
 _clang_path="${src_dir}/third_party/llvm-build/Release+Asserts/bin"
 ## env vars
-export CC=$_clang_path/clang
-export CXX=$_clang_path/clang++
-export AR=$_clang_path/llvm-ar
-export NM=$_clang_path/llvm-nm
+export CC=${_clang_path}/clang
+export CXX=${_clang_path}/clang++
+export AR=${_clang_path}/llvm-ar
+export NM=${_clang_path}/llvm-nm
 export LLVM_BIN=${_clang_path}
 ## flags
 llvm_resource_dir=$("$CC" --print-resource-dir)
