@@ -35,6 +35,8 @@ xdg-mime
 xdg-settings"
 
 mkdir -p ${CURRENT_DIR}/${FILE_PREFIX}
+cp ${BUILD_DIR}/src/LICENSE ${CURRENT_DIR}/${FILE_PREFIX}/LICENSE.chromium
+cp ${ROOT_DIR}/LICENSE ${CURRENT_DIR}/${FILE_PREFIX}/LICENSE.ungoogled
 for i in $FILES ; do
     cp -r ${BUILD_DIR}/src/out/Default/$i ${CURRENT_DIR}/${FILE_PREFIX}
 done
