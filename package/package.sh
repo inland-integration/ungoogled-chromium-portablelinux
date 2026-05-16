@@ -30,9 +30,7 @@ locales/
 product_logo_48.png
 resources.pak
 v8_context_snapshot.bin
-vk_swiftshader_icd.json
-xdg-mime
-xdg-settings"
+vk_swiftshader_icd.json"
 
 mkdir -p ${CURRENT_DIR}/${FILE_PREFIX}
 cp ${BUILD_DIR}/src/LICENSE ${CURRENT_DIR}/${FILE_PREFIX}/LICENSE.chromium
