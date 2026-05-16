@@ -75,6 +75,7 @@ fi
 
 ## Link to system tools required by the build
 mkdir -p third_party/node/linux/node-linux-x64/bin && ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin
+mkdir -p third_party/gperf/cipd/bin && ln -sf $(which gperf) third_party/gperf/cipd/bin/gperf
 
 ### build
 # ==================================================
