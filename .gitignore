@@ -1,4 +1,4 @@
-/package/ungoogled-chromium
+/package/ungoogled-chromium-*
 /build/
 /.config/
 /.gcs_entries
