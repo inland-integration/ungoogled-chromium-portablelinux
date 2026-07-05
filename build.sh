@@ -47,12 +47,12 @@ mkdir -p "${src_dir}/out/Default"
 
 cd "${main_repo}"
 
-patch -Np1 -i ${root_dir}/update-version-string.patch
+patch --no-backup-if-mismatch -Np1 -i ${root_dir}/update-version-string.patch
 
 cd "${src_dir}"
 
 for f in ${root_dir}/patches/*; do
-   patch -Np1 -i ${f}
+   patch --no-backup-if-mismatch -Np1 -i ${f}
 done
 
 # combine local and ungoogled-chromium gn flags
@@ -60,8 +60,10 @@ cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args
 
 # adjust host name to download prebuilt tools below and sysroot files from
 # (see e.g. https://github.com/ungoogled-software/ungoogled-chromium/issues/1846)
-sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./build/linux/sysroot_scripts/sysroots.json
-sed -i 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' ./tools/clang/scripts/update.py
+sed -e 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' \
+    -i ./build/linux/sysroot_scripts/sysroots.json
+sed -e 's/commondatastorage.9oo91eapis.qjz9zk/commondatastorage.googleapis.com/g' \
+    -i ./tools/clang/scripts/update.py
 
 ## use prebuilt tools for rust and clang insetad of system libs
 # use prebuilt rust
@@ -74,8 +76,10 @@ if grep -q -F "use_sysroot=true" "${src_dir}/out/Default/args.gn"; then
 fi
 
 ## Link to system tools required by the build
-mkdir -p third_party/node/linux/node-linux-x64/bin && ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin
-mkdir -p third_party/gperf/cipd/bin && ln -sf $(which gperf) third_party/gperf/cipd/bin/gperf
+mkdir -p third_party/node/linux/node-linux-x64/bin && \
+    ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin
+mkdir -p third_party/gperf/cipd/bin && \
+    ln -sf $(which gperf) third_party/gperf/cipd/bin/gperf
 
 ### build
 # ==================================================
@@ -91,15 +95,27 @@ llvm_resource_dir=$("$CC" --print-resource-dir)
 export CXXFLAGS+=" -resource-dir=${llvm_resource_dir} -B${LLVM_BIN}"
 export CPPFLAGS+=" -resource-dir=${llvm_resource_dir} -B${LLVM_BIN}"
 export CFLAGS+=" -resource-dir=${llvm_resource_dir} -B${LLVM_BIN}"
+## build vars
+export BUILD_CC=$CC
+export BUILD_CXX=$CXX
+export BUILD_AR=$AR
+export BUILD_NM=$NM
+export BUILD_LLVM_BIN=$LLVM_BIN
+export BUILD_CXXFLAGS=$CXXFLAGS
+export BUILD_CPPFLAGS=$CPPFLAGS
+export BUILD_CFLAGS=$CLFAGS
 
 # execute build
 ./tools/gn/bootstrap/bootstrap.py -o out/Default/gn --skip-generate-buildfiles
 ./out/Default/gn gen out/Default --fail-on-unused-args
 
 ninja -C out/Default chrome chrome_sandbox chromedriver
+RETVAL=$?
 
 BUILD_END=$(date)
 echo "==============================================================="
 echo "  Build package start at ${BUILD_START}"
 echo "  Build package end   at ${BUILD_END}"
 echo "==============================================================="
+
+exit $RETVAL
