@@ -76,10 +76,12 @@ if grep -q -F "use_sysroot=true" "${src_dir}/out/Default/args.gn"; then
 fi
 
 ## Link to system tools required by the build
-mkdir -p third_party/node/linux/node-linux-x64/bin && \
-    ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin
-mkdir -p third_party/gperf/cipd/bin && \
-    ln -sf $(which gperf) third_party/gperf/cipd/bin/gperf
+mkdir -pv third_party/node/linux/node-linux-x64/bin && \
+    ln -sv /usr/bin/node third_party/node/linux/node-linux-x64/bin
+mkdir -pv third_party/gperf/cipd/bin && \
+    ln -svf /usr/bin/gperf third_party/gperf/cipd/bin/gperf
+mkdir -pv third_party/dawn/tools/golang/linux-amd64/bin && \
+    ln -svf /usr/bin/go third_party/dawn/tools/golang/linux-amd64/bin/go
 
 ### build
 # ==================================================
@@ -104,8 +106,13 @@ export BUILD_LLVM_BIN=$LLVM_BIN
 export BUILD_CXXFLAGS=$CXXFLAGS
 export BUILD_CPPFLAGS=$CPPFLAGS
 export BUILD_CFLAGS=$CLFAGS
+## go vars
+export GOMODCACHE=${src_dir}/.go/mod
+export GOCACHE=${src_dir}/.go/build
+export GOPATH=${src_dir}/.go/go
 
 # execute build
+mkdir -pv ${GOMODCACHE} ${GOCACHE} ${GOPATH}
 ./tools/gn/bootstrap/bootstrap.py -o out/Default/gn --skip-generate-buildfiles
 ./out/Default/gn gen out/Default --fail-on-unused-args
 
