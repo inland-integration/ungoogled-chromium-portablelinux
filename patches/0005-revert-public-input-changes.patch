@@ -1,0 +1,12 @@
+--- a/third_party/devtools-frontend/src/scripts/build/ninja/devtools_entrypoint.gni
++++ b/third_party/devtools-frontend/src/scripts/build/ninja/devtools_entrypoint.gni
+@@ -197,9 +197,6 @@
+   node_action(target_name) {
+     script = "scripts/build/ninja/generate-tsconfig.js"
+ 
+-    # Expose ts files to dependent targets.
+-    public_inputs = [ invoker.entrypoint ]
+-
+     args = [
+              rebase_path(_generated_tsconfig_location, root_build_dir),
+              rebase_path(invoker.entrypoint, root_build_dir),

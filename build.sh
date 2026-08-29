@@ -82,6 +82,8 @@ mkdir -pv third_party/gperf/cipd/bin && \
     ln -svf /usr/bin/gperf third_party/gperf/cipd/bin/gperf
 mkdir -pv third_party/dawn/tools/golang/linux-amd64/bin && \
     ln -svf /usr/bin/go third_party/dawn/tools/golang/linux-amd64/bin/go
+mkdir -pv buildtools/linux64-format && \
+    ln -svf /usr/bin/clang-format buildtools/linux64-format/clang-format
 
 ### build
 # ==================================================
