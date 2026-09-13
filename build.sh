@@ -51,9 +51,9 @@ patch --no-backup-if-mismatch -Np1 -i ${root_dir}/update-version-string.patch
 
 cd "${src_dir}"
 
-for f in ${root_dir}/patches/*; do
-   patch --no-backup-if-mismatch -Np1 -i ${f}
-done
+while IFS= read -r line; do
+    patch --no-backup-if-mismatch -Np1 -i ${root_dir}/patches/${line}
+done < ${root_dir}/patches/series
 
 # combine local and ungoogled-chromium gn flags
 cat "${main_repo}/flags.gn" "${root_dir}/flags.gn" >"${src_dir}/out/Default/args.gn"
@@ -82,6 +82,8 @@ mkdir -pv third_party/gperf/cipd/bin && \
     ln -svf /usr/bin/gperf third_party/gperf/cipd/bin/gperf
 mkdir -pv third_party/dawn/tools/golang/linux-amd64/bin && \
     ln -svf /usr/bin/go third_party/dawn/tools/golang/linux-amd64/bin/go
+mkdir -pv third_party/cpython3/host/bin && \
+    ln -svf /usr/bin/python3 third_party/cpython3/host/bin/python3
 mkdir -pv buildtools/linux64-format && \
     ln -svf /usr/bin/clang-format buildtools/linux64-format/clang-format
 
