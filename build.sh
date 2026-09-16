@@ -5,10 +5,10 @@ echo "==============================================================="
 echo "  Build package start at ${BUILD_START}"
 echo "==============================================================="
 
-clone=false
+clone="false"
 while getopts "c" opt; do
     case "${opt}" in
-        c) clone=true
+        c) clone="true"
         ;;
     esac
 done
