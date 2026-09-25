@@ -86,6 +86,8 @@ mkdir -pv third_party/cpython3/host/bin && \
     ln -svf /usr/bin/python3 third_party/cpython3/host/bin/python3
 mkdir -pv buildtools/linux64-format && \
     ln -svf /usr/bin/clang-format buildtools/linux64-format/clang-format
+rm -rf third_party/devtools-frontend/src/node_modules/esbuild && \
+    ln -svf /usr/lib/node_modules/esbuild third_party/devtools-frontend/src/node_modules/esbuild
 
 ### build
 # ==================================================
