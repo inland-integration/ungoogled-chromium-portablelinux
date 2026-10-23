@@ -88,6 +88,8 @@ mkdir -pv buildtools/linux64-format && \
     ln -svf /usr/bin/clang-format buildtools/linux64-format/clang-format
 rm -rf third_party/devtools-frontend/src/node_modules/esbuild && \
     ln -svf /usr/lib/node_modules/esbuild third_party/devtools-frontend/src/node_modules/esbuild
+mkdir -pv third_party/typescript/linux-amd64/src/lib && \
+    ln -svf /usr/bin/tsc third_party/typescript/linux-amd64/src/lib/tsc
 
 ### build
 # ==================================================
